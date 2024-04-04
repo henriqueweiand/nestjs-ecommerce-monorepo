@@ -1,14 +1,11 @@
-import { AbstractDocument } from '@app/common';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Column, Entity } from 'typeorm';
+import { AbstractEntity } from '@app/common';
 
-@Schema({ versionKey: false })
-export class OrderDocument extends AbstractDocument {
-    @Prop()
-    price: number;
-
-    @Prop()
+@Entity()
+export class Order extends AbstractEntity<Order> {
+    @Column()
     userId: string;
-}
 
-export const OrderSchema =
-    SchemaFactory.createForClass(OrderDocument);
+    @Column()
+    price: number;
+}

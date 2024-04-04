@@ -3,6 +3,7 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { OrdersRepository } from './orders.repository';
 import { UserDto } from '@app/common/dto';
+import { Order } from './entities/order.entity';
 
 @Injectable()
 export class OrdersService {
@@ -12,25 +13,27 @@ export class OrdersService {
   }
 
   create(createOrderDto: CreateOrderDto, user: UserDto) {
-    return this.ordersRepository.create({
+    const order = new Order({
       ...createOrderDto,
-      userId: user._id,
+      userId: user.id,
     });
+
+    return this.ordersRepository.create(order);
   }
 
   findAll() {
     return this.ordersRepository.find({});
   }
 
-  findOne(_id: string) {
-    return this.ordersRepository.findOne({ _id });
+  findOne(id: string) {
+    return this.ordersRepository.findOne({ id });
   }
 
-  update(_id: string, updateOrderDto: UpdateOrderDto) {
-    return this.ordersRepository.findOneAndUpdate({ _id }, { $set: updateOrderDto });
+  update(id: string, updateOrderDto: UpdateOrderDto) {
+    return this.ordersRepository.findOneAndUpdate({ id }, updateOrderDto);
   }
 
-  remove(_id: string) {
-    return this.ordersRepository.findOneAndDelete({ _id });
+  remove(id: string) {
+    return this.ordersRepository.findOneAndDelete({ id });
   }
 }
