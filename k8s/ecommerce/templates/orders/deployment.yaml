@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: orders
+  name: orders
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders
+  template:
+    metadata:
+      labels:
+        app: orders
+    spec:
+      containers:
+        - image: localhost:5000/nestjs-ecommerce-monorepo_orders:latest
+          name: orders
+          env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: connectionString
+            - name: PORT
+              value: '3000'
+            - name: AUTH_HOST
+              value: auth
+            - name: AUTH_PORT
+              value: '3002'
+          ports:
+            - containerPort: 3000

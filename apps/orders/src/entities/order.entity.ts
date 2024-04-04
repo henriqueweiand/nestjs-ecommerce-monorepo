@@ -5,6 +5,9 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 export class OrderDocument extends AbstractDocument {
     @Prop()
     price: number;
+
+    @Prop()
+    userId: string;
 }
 
 export const OrderSchema =

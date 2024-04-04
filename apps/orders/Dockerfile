@@ -14,6 +14,8 @@ RUN pnpm install
 COPY apps/orders apps/orders
 COPY libs libs
 
+RUN cd apps/orders && pnpm install
+
 RUN pnpm run build orders
 
 FROM node:alpine as production

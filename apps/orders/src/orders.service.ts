@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { OrdersRepository } from './orders.repository';
+import { UserDto } from '@app/common/dto';
 
 @Injectable()
 export class OrdersService {
@@ -10,8 +11,11 @@ export class OrdersService {
   ) {
   }
 
-  create(createOrderDto: CreateOrderDto) {
-    return this.ordersRepository.create(createOrderDto);
+  create(createOrderDto: CreateOrderDto, user: UserDto) {
+    return this.ordersRepository.create({
+      ...createOrderDto,
+      userId: user._id,
+    });
   }
 
   findAll() {
