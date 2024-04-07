@@ -6,7 +6,9 @@ import { Logger } from 'nestjs-pino';
 import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
-  const app = await NestFactory.create(OrdersModule);
+  const app = await NestFactory.create(OrdersModule, {
+    snapshot: true,
+  });
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.useLogger(app.get(Logger));

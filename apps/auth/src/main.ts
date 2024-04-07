@@ -7,7 +7,9 @@ import { Logger } from 'nestjs-pino';
 import { AuthModule } from './auth.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AuthModule);
+  const app = await NestFactory.create(AuthModule, {
+    snapshot: true,
+  });
   const configService = app.get(ConfigService);
   app.connectMicroservice({
     transport: Transport.TCP,

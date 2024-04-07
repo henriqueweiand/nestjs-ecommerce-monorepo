@@ -11,7 +11,7 @@ import { UsersService } from './users.service';
     DatabaseModule.forFeature([User]),
   ],
   controllers: [UsersController],
-  providers: [UsersService, UsersRepository, UsersResolver],
+  providers: [UsersService, UsersRepository],
   exports: [UsersService],
 })
 export class UsersModule { }

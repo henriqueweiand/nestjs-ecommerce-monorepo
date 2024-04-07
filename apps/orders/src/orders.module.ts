@@ -1,15 +1,15 @@
 import { AUTH_SERVICE, DatabaseModule, LoggerModule } from '@app/common';
+import { ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 import * as Joi from 'joi';
 import { Order } from './entities/order.entity';
 import { OrdersController } from './orders.controller';
 import { OrdersRepository } from './orders.repository';
-import { OrdersService } from './orders.service';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { ApolloFederationDriverConfig, ApolloFederationDriver } from '@nestjs/apollo';
-import { GraphQLModule } from '@nestjs/graphql';
 import { OrdersResolver } from './orders.resolver';
+import { OrdersService } from './orders.service';
 
 @Module({
   imports: [
@@ -45,6 +45,6 @@ import { OrdersResolver } from './orders.resolver';
     ]),
   ],
   controllers: [OrdersController],
-  providers: [OrdersService, OrdersRepository, OrdersResolver],
+  providers: [OrdersService, OrdersRepository],
 })
 export class OrdersModule { }
