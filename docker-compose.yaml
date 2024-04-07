@@ -34,7 +34,7 @@ services:
     env_file:
       - ./apps/gateway/.env
     ports:
-      - '3001:3001'
+      - '3002:3002'
     volumes:
       - .:/usr/src/app
 

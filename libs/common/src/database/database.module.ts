@@ -15,12 +15,6 @@ import { EntityClassOrSchema } from '@nestjs/typeorm/dist/interfaces/entity-clas
         password: configService.getOrThrow('DATABASE_PASSWORD'),
         autoLoadEntities: true,
         synchronize: true,
-        // entities: [`${__dirname}/**/*.entity{.ts,.js}`],
-        // migrations: [`${__dirname}/migrations/*{.ts,.js}`],
-        // cli: {
-        //   migrationsDir: 'src/migrations',
-        // },
-        // migrationsRun: true,
         logging: configService.getOrThrow('TYPEORM_LOGGING'),
       }),
       inject: [ConfigService],

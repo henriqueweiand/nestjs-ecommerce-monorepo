@@ -7,6 +7,9 @@ import { OrdersController } from './orders.controller';
 import { OrdersRepository } from './orders.repository';
 import { OrdersService } from './orders.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ApolloFederationDriverConfig, ApolloFederationDriver } from '@nestjs/apollo';
+import { GraphQLModule } from '@nestjs/graphql';
+import { OrdersResolver } from './orders.resolver';
 
 @Module({
   imports: [
@@ -19,8 +22,14 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         AUTH_PORT: Joi.number().required(),
       }),
     }),
-    DatabaseModule.forFeature([Order]),
     DatabaseModule,
+    DatabaseModule.forFeature([Order]),
+    GraphQLModule.forRoot<ApolloFederationDriverConfig>({
+      driver: ApolloFederationDriver,
+      autoSchemaFile: {
+        federation: 2,
+      },
+    }),
     ClientsModule.registerAsync([
       {
         name: AUTH_SERVICE,
@@ -36,6 +45,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     ]),
   ],
   controllers: [OrdersController],
-  providers: [OrdersService, OrdersRepository],
+  providers: [OrdersService, OrdersRepository, OrdersResolver],
 })
 export class OrdersModule { }

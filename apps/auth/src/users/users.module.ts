@@ -1,22 +1,17 @@
-import { Module } from '@nestjs/common';
 import { DatabaseModule, User } from '@app/common';
+import { Module } from '@nestjs/common';
 import { UsersController } from './users.controller';
-import { UsersService } from './users.service';
 import { UsersRepository } from './users.repository';
-import { PersistenceModule } from '@app/common/persistence/persistence.module';
+import { UsersResolver } from './users.resolver';
+import { UsersService } from './users.service';
 
 @Module({
   imports: [
-    // DatabaseModule,
-    // DatabaseModule.forFeature([User]),
-    PersistenceModule.forDatabase({
-      models: [User],
-      module: 'auth',
-    }),
-    PersistenceModule.forFeature([User]),
+    DatabaseModule,
+    DatabaseModule.forFeature([User]),
   ],
   controllers: [UsersController],
-  providers: [UsersService, UsersRepository],
+  providers: [UsersService, UsersRepository, UsersResolver],
   exports: [UsersService],
 })
 export class UsersModule { }
